@@ -1,4 +1,4 @@
-name: Linux
+name: Parrot-OS
 
 on:
     push:
@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-       - name: checkout linux
+       - name: checkout Parrot-OS
          uses: actions/checkout@main
        
        - uses: styfle/cancel-workflow-action@0.9.0
@@ -17,7 +17,7 @@ jobs:
          with:
             all_but_latest: true
             access_token: ${{ github.token }}
-       - name: initialization linux
+       - name: initialization Parrot-OS
          continue-on-error: true
          run: |
            git config --global user.name ${{ secrets.GIT_NAME }}
@@ -27,20 +27,20 @@ jobs:
        - name: cloning repository
          continue-on-error: true
          run: |
-           git clone https://${{ secrets.GIT_NAME }}:${{ secrets.GIT_TOKEN }}@${{ secrets.BOT_REPO }} linux
-       - name: running linux server
+           git clone https://${{ secrets.GIT_NAME }}:${{ secrets.GIT_TOKEN }}@${{ secrets.BOT_REPO }} Parrot-OS
+       - name: running Parrot-OS server
          timeout-minutes: 350
          continue-on-error: true
          run: |
-           cd kaali
-           docker build . -t Linux
-           docker run kaali
-       - name: loop linux server
+           cd Parrot
+           docker build . -t Parrot-OS 
+           docker run Parrot
+       - name: loop Parrot-OS server
          continue-on-error: true
          run: |
               git clone https://github.com/${GITHUB_REPOSITORY} loop
               cd loop || exit 1
               echo $(date -u +%T%P) >> loop.txt
               git add loop.txt
-              git commit -m "Linux : Loop $(date -u +%D-%T%P)"
-              git push -q https://${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:linux
+              git commit -m "Parrot-OS : Loop $(date -u +%D-%T%P)"
+              git push -q https://${{ secrets.GIT_TOKEN }}@github.com/${GITHUB_REPOSITORY} HEAD:Parrot-OS 
